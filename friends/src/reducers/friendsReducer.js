@@ -1,37 +1,37 @@
 import {  
-  FETCH_LOADING,
-  FETCH_SUCCESS,
-  FETCH_ERROR
-} from "./actions";
+  LOGIN_START,
+  LOGIN_SUCCESS,
+  LOGIN_ERROR
+} from "../actions/actions";
 
 const initialState = {
   friends: [],
-  isLoading: false,
-  deletingFriend: false,
+  //isLoading: false,
+  //deletingFriend: false,
   isLoggingIn: false,
-  savingFriends: false,
-  updatingFriend: false,
+  //savingFriends: false,
+  //updatingFriend: false,
   error: null
 }
 
 export const friendsReducer = (state = initialState, action) => {
   switch(action.type){
 
-    case FETCH_LOADING:
+    case LOGIN_START:
       return {
         ...state,
           error: null,
-          isLoading: true
+          isLoggingIn: true
      }
 
-      case FETCH_SUCCESS:
+      case LOGIN_SUCCESS:
         return {
           ...state,
           error: null,
-          isLoading: false
+          isLoggingIn: false
         }
 
-        case FETCH_ERROR:
+        case LOGIN_ERROR:
           return {
             ...state,
             error: 'Внимание! Внимание! Error loading files...'

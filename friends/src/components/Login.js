@@ -1,7 +1,7 @@
 import React from 'react'
 import Loader from "react-loader-spinner"
 import { connect } from 'react-redux'
-import { login } from '../actions';
+import { login } from '../actions/actions';
 
 class Login extends React.Component {
   state = {
@@ -27,6 +27,7 @@ class Login extends React.Component {
     });
   };
 
+
 render() {
   return (
     <form onSubmit={this.login}>
@@ -35,18 +36,18 @@ render() {
         name='username'
         placeholder='Username'
         value={this.state.credentials.username}
-        onChange={props.changeHandler}
+        onChange={this.handleChange}
       />
       <input
-        type='text'
-        name='username'
+        type='password'
+        name='password'
         placeholder='Password'
         value={this.state.credentials.password}
-       onChange={props.changeHandler}
+        onChange={this.handleChange}
       />
       
        <button>
-        {this.props.loggingIn ? (
+        {this.props.isLoggingIn ? (
           <Loader 
           type="ThreeDots" 
           color="#1f2a38" 
@@ -58,9 +59,12 @@ render() {
   }
 }
 
-const mapStateToProps = state => ({
-   isLoggingIn: state.isLoggingIn
-})
+const mapStateToProps = state => {
+  console.log('STATE from mapStateToProps:', state)
+  return {
+    isLoggingIn: state.friendsReducer.isLoggingIn
+  }
+}
 
 export default connect(
   mapStateToProps,

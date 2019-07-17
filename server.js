@@ -56,17 +56,20 @@ function authenticator(req, res, next) {
   if (authorization === token) {
     next();
   } else {
-    res.status(403).json({ error: 'User be logged in to do that.' });
+    res.status(403).json({ error: 'User needs to be logged in to do that.' });
   }
 }
 
 app.post('/api/login', (req, res) => {
   const { username, password } = req.body;
-  if (username === 'Lambda School' && password === 'i<3Lambd4') {
+  if (username === 'Zaur' && password === '123') {
     req.loggedIn = true;
-    res.status(200).json({
-      payload: token
-    });
+    setTimeout(() => {
+      res.status(200).json({
+        payload: token
+      });
+    }, 1000)
+   
   } else {
     res
       .status(403)
