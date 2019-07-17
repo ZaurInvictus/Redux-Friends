@@ -30,6 +30,9 @@ class Login extends React.Component {
 
 render() {
   return (
+   <div>
+    {this.props.error && this.props.error} 
+
     <form onSubmit={this.login}>
       <input
         type='text'
@@ -55,6 +58,7 @@ render() {
           width="26" /> ) : ( "Log in" )}
        </button>
     </form>
+   </div>
    )
   }
 }
@@ -62,7 +66,8 @@ render() {
 const mapStateToProps = state => {
   console.log('STATE from mapStateToProps:', state)
   return {
-    isLoggingIn: state.friendsReducer.isLoggingIn
+    isLoggingIn: state.friendsReducer.isLoggingIn,
+    error: state.friendsReducer.error
   }
 }
 

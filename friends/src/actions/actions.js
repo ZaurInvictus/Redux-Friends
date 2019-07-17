@@ -1,5 +1,5 @@
 import axios from 'axios'
-//import { axiosWithAuth } from "../axiosWithAuth";
+import { axiosWithAuth } from "../axiosWithAuth";
 
 export const LOGIN_START = "LOGIN_START";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
@@ -21,7 +21,23 @@ export const login = creds => dispatch => {
  };
 
 
+export const FETCH_FRIENDS_START = "FETCH_PRICES_START";
+export const FETCH_FRIENDS_SUCCESS = "FETCH_PRICES_SUCCESS";
+export const FETCH_FRIENDS_ERROR = "FETCH_PRICES_ERROR";
 
+
+export const getData = () => dispatch => {
+  dispatch({ type: FETCH_FRIENDS_START });
+  axiosWithAuth()
+ .get('/friends')
+ .then(res => {
+   console.log('RES of getData() from AXIOS', res)
+   dispatch({type: FETCH_FRIENDS_SUCCESS, payload: res.data})
+ })
+  .catch(err=> {
+    dispatch({type: FETCH_FRIENDS_ERROR})
+  })
+};
 
 
 
