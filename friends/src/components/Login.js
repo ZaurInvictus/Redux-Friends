@@ -30,7 +30,7 @@ class Login extends React.Component {
 
 render() {
   return (
-   <div>
+   <div className='login-form'>
     {this.props.error && this.props.error} 
 
     <form onSubmit={this.login}>
@@ -56,7 +56,9 @@ render() {
           color="#1f2a38" 
           height="12" 
           width="26" /> ) : ( "Log in" )}
+          {/* {this.props.isLoggingIn ? 'Loading' : 'Login'} */}
        </button>
+
     </form>
    </div>
    )

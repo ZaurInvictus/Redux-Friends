@@ -5,7 +5,11 @@ import {
 
   FETCH_FRIENDS_START, 
   FETCH_FRIENDS_SUCCESS, 
-  FETCH_FRIENDS_ERROR 
+  FETCH_FRIENDS_ERROR ,
+
+  POSTING_START,
+  POSTING_SUCCESS,
+  POSTING_ERROR 
 } from "../actions/actions";
 
  
@@ -13,11 +17,11 @@ import {
 const initialState = {
   friends: [],
   fetchingFriends: false,
-  //deletingFriend: false,
   isLoggingIn: false,
-  //savingFriends: false,
-  //updatingFriend: false,
-  error: null
+  error: null,
+  postFriend: false,
+  // updateFriend: false,
+  // deleteFriend: false,
 }
 
 
@@ -67,6 +71,27 @@ export const friendsReducer = (state = initialState, action) => {
             error: 'Something wrong with friends😵!'
           }
 
+          case POSTING_START:
+            return {
+              ...state,
+              postFriend: false,
+              error: null,
+            }
+          case POSTING_SUCCESS:
+            console.log('gggggggggggggggg', action.payload)
+            return {
+              ...state,
+              friends: action.payload,
+              postFriend: true,
+              error: null
+            }
+          case POSTING_ERROR:
+            return {
+              ...state,
+              postFriend: false,
+              error: 'Something wrong with posting friends😵!'
+            }
+       
       default:
       return state
   }
