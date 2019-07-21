@@ -1,7 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Link, withRouter } from 'react-router-dom';
-import { getData, deleteFriend } from '../actions/actions'
+import { getData, deleteFriend, editFriend } from '../actions/actions'
+import EditForm from './EditForm'
 
 
 class Friends extends React.Component {
@@ -21,6 +22,12 @@ class Friends extends React.Component {
   this.props.history.push('/login')
 }
 
+editFriend = (e, friend) => {
+  e.preventDefault();
+  this.props.editFriend(friend).then(() => {
+    this.setState({ editingFriendId: null });
+  });
+};
 
 removeFriend = id => {
   this.setState({ deletingFriendId: id });
@@ -38,6 +45,19 @@ render() {
       <button type="button" onClick={this.logout}>Logout</button>
     <div>
       {this.props.friends.map( friend => {
+
+        if (this.state.editingFriendId === friend.id) {
+            return (
+              <div className="friend-card" key={friend.id}>
+                <EditForm
+                  friend={friend}
+                  editFriend={this.editFriend}
+                  editingFriend={this.props.editingFriend}
+                />
+              </div>
+            );
+          }
+
       return (
          <div className="friends-card" key={friend.id}>
           
@@ -48,13 +68,19 @@ render() {
                 this.state.deletingFriendId === friend.id && (
                   <p>Deleting Friend 👋</p>
                 )}
+
+              <i
+                className="fas fa-pencil-alt"
+                onClick={() => this.setState({ editingFriendId: friend.id })}
+              />
         
-          <i
-             className="fas fa-times"
-             onClick={() => this.removeFriend(friend.id)}
-          />
+             <i
+               className="fas fa-times"
+               onClick={() => this.removeFriend(friend.id)}
+             />
          </div>
         )
+        
       })}
     </div>
   
@@ -68,14 +94,27 @@ const mapStateToProps = state => {
   return {
     friends: state.friendsReducer.friends,
     fetchingFriends: state.friendsReducer.fetchingFriends,
-    deletingFriend: state.friendsReducer.deletingFriend
+    deletingFriend: state.friendsReducer.deletingFriend,
+    editingFriend: state.friendsReducer. editingFriend
   }
 };
+
+// const mapStateToProps = ({
+//   deletingFriend,
+//   friends,
+//   fetchingFriends,
+//   editingFriend
+// }) => ({
+//   deletingFriend,
+//   editingFriend,
+//   friends,
+//   fetchingFriends
+// });
 
 export default withRouter(
   connect(
     mapStateToProps,
-    { getData, deleteFriend }
+    { getData, deleteFriend, editFriend }
   )(Friends)
 )
 

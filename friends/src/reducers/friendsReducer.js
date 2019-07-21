@@ -13,7 +13,10 @@ import {
 
   DELETE_START,
   DELETE_SUCCESS,
-  USER_UNAUTHORIZED 
+  USER_UNAUTHORIZED,
+
+  EDIT_FRIEND_START,
+  EDIT_FRIEND_SUCCESS,
 } from "../actions/actions";
 
 
@@ -26,7 +29,7 @@ const initialState = {
   postingFriend: false,
   deletingFriend: false,
   errorStatusCode: null,
-  // updateFriend: false,
+  editingFriend: false,
 }
 
 
@@ -117,6 +120,19 @@ export const friendsReducer = (state = initialState, action) => {
                   errorStatusCode: action.payload.status,
                   fetchingFriends: false
                 };
+                case EDIT_FRIEND_START:
+                  return {
+                    ...state,
+                    editingFriend: true
+                  };
+                case EDIT_FRIEND_SUCCESS:
+                  return {
+                    ...state,
+                    editingFriend: false,
+                    error: '',
+                    errorStatusCode: null,
+                    friends: action.payload
+                  };
 
       default:
       return state

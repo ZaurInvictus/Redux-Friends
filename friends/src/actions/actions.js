@@ -109,24 +109,27 @@ export const deleteFriend = id => dispatch => {
 };
 
 
-// export const UPDATE_START = 'UPDATE_START'
-// export const UPDATE_SUCCESS = 'UPDATE_SUCCESS'
-// export const UPDATE_ERROR = 'UPDATE_ERROR'
+export const EDIT_FRIEND_START = 'EDIT_FRIEND_START';
+export const EDIT_FRIEND_SUCCESS = 'EDIT_FRIEND_SUCCESS';
+export const EDIT_FRIEND_FAILURE = 'EDIT_FRIEND_FAILURE';
 
-
-// export const updateFriend = (updatedFriend) => dispatch => {
-//   dispatch({ type: UPDATE_START });
-//   axios 
-//   .put(`http://localhost:5000/friends/${id}`, updatedFriend)
-//   .then( res => {
-//     dispatch({ type: UPDATE_SUCCESS, payload: res.data});
-//   })
-//   .catch(err => {
-//     console.log('ERROR from AXIOS POST CALL', err.response)
-//     dispatch({ type: UPDATE_ERROR, payload: err.response});
-//   });
-// };
-
+export const editFriend = friend => dispatch => {
+  dispatch({ type: EDIT_FRIEND_START });
+  return axios
+    .put(`http://localhost:5000/api/friends/${friend.id}`, friend, {
+      headers: { Authorization: localStorage.getItem('token') }
+    })
+    .then(res => {
+      dispatch({ type: EDIT_FRIEND_SUCCESS, payload: res.data });
+    })
+    .catch(err => {
+      if (err.response.status === 403) {
+        dispatch({ type: USER_UNAUTHORIZED, payload: err.response });
+      } else {
+        dispatch({ type: EDIT_FRIEND_FAILURE, payload: err.response });
+      }
+    });
+};
 
 
 
