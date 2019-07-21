@@ -1,27 +1,32 @@
-import {  
+import {
   LOGIN_START,
   LOGIN_SUCCESS,
   LOGIN_ERROR,
 
-  FETCH_FRIENDS_START, 
-  FETCH_FRIENDS_SUCCESS, 
+  FETCH_FRIENDS_START,
+  FETCH_FRIENDS_SUCCESS,
   FETCH_FRIENDS_ERROR ,
 
   POSTING_START,
   POSTING_SUCCESS,
-  POSTING_ERROR 
+  POSTING_ERROR,
+
+  DELETE_START,
+  DELETE_SUCCESS,
+  USER_UNAUTHORIZED 
 } from "../actions/actions";
 
- 
+
 
 const initialState = {
   friends: [],
   fetchingFriends: false,
   isLoggingIn: false,
   error: null,
-  postFriend: false,
+  postingFriend: false,
+  deletingFriend: false,
+  errorStatusCode: null,
   // updateFriend: false,
-  // deleteFriend: false,
 }
 
 
@@ -46,7 +51,7 @@ export const friendsReducer = (state = initialState, action) => {
           return {
             ...state,
             isLoggingIn: false,
-            error: 'Uh noo... something wrong 😵!'
+            error: action.payload
           }
 
         case FETCH_FRIENDS_START:
@@ -74,24 +79,45 @@ export const friendsReducer = (state = initialState, action) => {
           case POSTING_START:
             return {
               ...state,
-              postFriend: false,
+              postingFriend: true,
               error: null,
             }
           case POSTING_SUCCESS:
-            console.log('gggggggggggggggg', action.payload)
             return {
               ...state,
               friends: action.payload,
-              postFriend: true,
+              postingFriend: false,
               error: null
             }
           case POSTING_ERROR:
             return {
               ...state,
-              postFriend: false,
-              error: 'Something wrong with posting friends😵!'
+              postingFriend: false,
+              error: action.payload.status
             }
-       
+
+            case DELETE_START:
+              return {
+                ...state,
+                deletingFriend: true
+              };
+            case DELETE_SUCCESS:
+              return {
+                ...state,
+                deletingFriend: false,
+                error: '',
+                errorStatusCode: null,
+                friends: action.payload
+              };
+              case USER_UNAUTHORIZED:
+                console.log(action);
+                return {
+                  ...state,
+                  error: action.payload.data.error,
+                  errorStatusCode: action.payload.status,
+                  fetchingFriends: false
+                };
+
       default:
       return state
   }

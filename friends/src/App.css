@@ -79,3 +79,7 @@ button {
    width: 400px;
    margin: 5px auto;
 }
+
+.friends-card * {
+   margin: 0;
+} 

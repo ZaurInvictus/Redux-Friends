@@ -64,12 +64,9 @@ app.post('/api/login', (req, res) => {
   const { username, password } = req.body;
   if (username === 'Zaur' && password === '123') {
     req.loggedIn = true;
-    setTimeout(() => {
-      res.status(200).json({
-        payload: token
-      });
-    }, 1000)
-   
+    res.status(200).json({
+      payload: token
+    });
   } else {
     res
       .status(403)
@@ -80,7 +77,7 @@ app.post('/api/login', (req, res) => {
 app.get('/api/friends', authenticator, (req, res) => {
   setTimeout(() => {
     res.send(friends);
-  }, 1000);
+  }, 200);
 });
 
 app.get('/api/friends/:id', authenticator, (req, res) => {
@@ -124,8 +121,11 @@ app.delete('/api/friends/:id', authenticator, (req, res) => {
   const { id } = req.params;
 
   friends = friends.filter(f => f.id !== Number(id));
+  
+  setTimeout(()=> {
+    res.send(friends);
+  }, 500)
 
-  res.send(friends);
 });
 
 function getNextId() {

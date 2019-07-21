@@ -9,7 +9,6 @@ class PostFriend extends React.Component {
     email: ''
   }
 
- 
   handleChange = e => {
     e.preventDefault()
     this.setState({ [e.target.name]: e.target.value })
@@ -20,7 +19,7 @@ class PostFriend extends React.Component {
     const {name, age, email} = this.state
     this.props.postFriend({ name, age, email })
     this.setState({ name: '', age: '', email: '' });
-    this.props.history.push('/protected')
+    this.props.history.push('/friends')
   }
 
 
@@ -63,13 +62,12 @@ const mapStateToProps = state => {
   console.log(state)
   return {
     error: state.friendsReducer.error,
-    postFriend: state.friendsReducer.postFriend
+    postFriend: state.friendsReducer.postingFriend
   };
 };
 
 
-
 export default connect(
-  mapStateToProps, 
+  mapStateToProps,
   { postFriend }
   )(PostFriend);
