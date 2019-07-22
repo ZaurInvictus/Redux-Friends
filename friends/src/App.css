@@ -81,5 +81,9 @@ button {
 }
 
 .friends-card * {
-   margin: 0;
-} 
+   margin: 5px;
+  }
+
+.friends-card i {
+   color: royalblue;
+  }

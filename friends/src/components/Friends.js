@@ -38,7 +38,6 @@ render() {
   if(this.props.fetchingFriends) {
     return <h1>Loading...</h1>
   }
-  console.log('PROPS from FRIENDS:', this.props.friends)
   return(
     <div> 
       <Link to='/post'>Post Friend</Link>
@@ -90,26 +89,14 @@ render() {
 }
 
 const mapStateToProps = state => {
-  console.log('STATE form FRIENDS', state)
   return {
     friends: state.friendsReducer.friends,
     fetchingFriends: state.friendsReducer.fetchingFriends,
     deletingFriend: state.friendsReducer.deletingFriend,
-    editingFriend: state.friendsReducer. editingFriend
+    editingFriend: state.friendsReducer.editingFriend
   }
 };
 
-// const mapStateToProps = ({
-//   deletingFriend,
-//   friends,
-//   fetchingFriends,
-//   editingFriend
-// }) => ({
-//   deletingFriend,
-//   editingFriend,
-//   friends,
-//   fetchingFriends
-// });
 
 export default withRouter(
   connect(
